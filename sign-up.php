@@ -1,25 +1,3 @@
-<?php
-    require 'db/db.php';
-
-    $message = '';
-
-    if (!empty($_POST['email']) && !empty($_POST['password'])) {
-        $sql = "INSERT INTO usuarios (nombre, apellido, correo, contrasena) VALUES (:nombre, :apellido, :correo , :password)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':nombre', $_POST['name']);
-        $stmt->bindParam(':apellido', $_POST['lastname']);
-        $stmt->bindParam(':correo', $_POST['email']);
-        $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-        $stmt->bindParam(':password', $password);
-
-        if ($stmt->execute()) {
-            $message = 'Se ha creado el usuario';
-        } else {
-            $message = 'No se ha creado el usuario';
-        }
-      }
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,46 +6,69 @@
     <link rel="stylesheet" href="./assets/css/signup.css">
     <link rel="stylesheet" href="./assets/css/header.css">
     <link rel="stylesheet" href="./assets/css/Footer.css">
-    <title>Sig-up</title>
+    <title>Sign-up</title>
 </head>
 <body>
 
     <?php require './components/Header.php' ?>
 
     <div class='container-form-s'>
-        
-        
-        <form action="sign-up.php" method="POST">
-        <?php if(!empty($message)): ?>
-            <div class='modal'>
-            <p> <?= $message ?></p>
-            </div>
-        <?php endif; ?>
+    <?php
+    include("./db/db.php");
+
+         if(isset($_POST['submit'])){
+            $username = $_POST['name'];
+            $lastname = $_POST['lastname'];
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+
+            $verify_query = mysqli_query($conn,"SELECT email FROM usuarios WHERE email='$email'");
+         if(mysqli_num_rows($verify_query) != 0){
+            echo "<div class='message error'>
+                      <p>El correo ya existe!</p>
+                      <a href='sign-up.php'>Reintentar</a>
+                  </div> 
+                  <br>";
+            $email = '';
+         }
+         else{
+            mysqli_query($conn,"INSERT INTO usuarios(name,lastname,email,password) VALUES('$username','$lastname','$email','$password')") or die("Erroe Occured");
+            echo "<div class='message success'>
+                      <p>Usuario registrado correctamente!</p>
+                      <a href='login.php'>Iniciar sesión</a>
+                  </div> <br>";
+         }  
+        }else{
+        ?>
+        <form  action="sign-up.php" method="POST">
             <div class='container-title-s'>
                 <h1>Resgistrarse</h1>
             </div>
             <div class='container-inputs-s'>
-
+                
                 <label for="name">Nombre</label>
-                <input type="text" name="name" placeholder="Nombre">
+                <input type="text" name="name" placeholder="Nombre" require>
 
                 <label for="lastname">Apellido</label>
-                <input type="text" name="lastname" placeholder="Apellido">
+                <input type="text" name="lastname" placeholder="Apellido" require>
 
-                <label for="correo"> Correo</label>
-                <input type="correo" name="email" placeholder="Correo">
+                <label for="email"> Correo</label>
+                <input type="email" name="email" placeholder="Correo" require>
 
                 <label for="password">Contraseña</label>
-                <input type="password" name="password" placeholder="Contraseña">
+                <input type="password" name="password" placeholder="Contraseña" require>
 
                 <label for="confirm_password">Confirmar contraseña</label>
                 <input type="password" name="confirm_password" placeholder="Confirm Password">
 
-                <input type="submit" value="Registrarse">
+                <input type="submit" name="submit" value="Registrarse">
             </div>
         </form>
+        <?php } ?>
     </div>
-
+    
     <?php require './components/Footer.php' ?>
+
+    <script src="https://kit.fontawesome.com/d376442cc6.js" crossorigin="anonymous"></script>
 </body>
 </html>

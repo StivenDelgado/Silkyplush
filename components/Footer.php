@@ -16,7 +16,7 @@
         </div>
         <div>
             <ul>
-                <li><a href=""></a></li>
+                <li><a href=""><i class="fa-brands fa-twitter"></i></a></li>
                 <li><a href=""></a></li>
                 <li><a href=""></a></li>
             </ul>

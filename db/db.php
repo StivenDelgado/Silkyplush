@@ -5,9 +5,9 @@ $password = '';
 $database = 'php_proyect';
 
 try {
-    $conn = new PDO("mysql:host=$server;dbname=$database;", $username, $password);
-} catch (PDOException $e) {
-    die('Connection failed: ' . $e->getMessage());
+ $conn = mysqli_connect("$server","$username","$password","$database") or die("Couldn't connect");
+} catch (Exception $e) {
+    echo $e->getMessage();
 }   
 
 ?>

@@ -6,10 +6,8 @@
         <ul>
              <li><a href="index.php">Inicio</a></li>
              <li><a href="index.php?controller=usuario&action=logout">Logout</a></li>
-             <li><a href="index.php?controller=usuario&action=editar">Editar</a></li>
-             <li><a href="index.php?controller=usuario&action=borrar">Borrar</a></li>
              <li><a href="index.php?controller=usuario&action=login">Login</a></li>
-             <li><a class='btn-header' href="index.php?controller=usuario&action=registro">Registro</a></li>
+             <li><a href="index.php?controller=usuario&action=registro">Registro</a></li>
         </ul>
    </nav>
 </header>

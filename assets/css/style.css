@@ -79,3 +79,33 @@
 .container-form form input[type='submit']:hover{
     background-color: #c57bfe;
 }
+
+.message{
+    width: 30%;
+    height: 20%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    gap: 20px;
+    background-color: white;
+}
+
+.message p{
+    font: 600;
+    color: #EF4444;
+    font-size: 15px;
+}
+.message a{
+    padding: 5px 30px;
+    border: none;
+    border-radius: 10px;
+    width: 60%;
+    height: 20%;
+    background-color: #d29bfd;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+}
